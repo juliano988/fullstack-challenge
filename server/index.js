@@ -3,6 +3,8 @@ var cors = require('cors')
 const app = express();
 const port = 3000;
 const dotenv = require('dotenv').config();
+//-----------------------------
+const routes = require('./routs.js');
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
@@ -20,11 +22,9 @@ db.once('open', function () {
 
   const Books = mongoose.models.Books || mongoose.model('Books', bookSchema);
 
-  app.use(cors());
+  // routes(Books);
 
-  app.get('/', (req, res) => {
-    res.send('Hello World!')
-  })
+  app.use(cors());
 
   app.get('/api/list-books', async function (req, res) {
 
