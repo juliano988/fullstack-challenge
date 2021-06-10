@@ -12,8 +12,12 @@
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "expo": "~41.0.1",
     "expo-status-bar": "~1.0.4",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.13",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
@@ -25,6 +29,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@types/express": "^4.17.12",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "typescript": "~4.0.0"
