@@ -1,16 +1,26 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Constants from 'expo-constants';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Book } from '../customTypes';
 import { AntDesign } from '@expo/vector-icons';
 import detailsBookBg from '../assets/detailsBookBg.png';
+import { HideTabBar } from '../App';
 
 export default function BookDetails() {
+
+  const hideTabBar = useContext(HideTabBar);
 
   const navigation = useNavigation();
 
   const { book } = useRoute().params as { book: Book };
+
+  useEffect(function(){
+    hideTabBar.setshowTabBar(false);
+    return(function(){
+      hideTabBar.setshowTabBar(true);
+    })
+  },[]);
 
   return (
     <>
