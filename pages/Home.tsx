@@ -4,19 +4,19 @@ import { Foundation } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { Book, PageMeta } from '../customTypes';
 import BookCard from '../components/BookCard';
-import BookDetails from './BookDetails';
-import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AddBook from './AddBook';
 
 export default function Home() {
 
-  const Stack = createStackNavigator();
+  const Tab = createBottomTabNavigator();
 
   return (
-    <Stack.Navigator initialRouteName="Main" >
-      <Stack.Screen name="Main" component={HomeMainContent} options={{ headerShown: false }} />
-      <Stack.Screen name="Book Details" component={BookDetails} options={{ headerShown: false }} />
-    </Stack.Navigator>
+    <Tab.Navigator initialRouteName="Home Page" >
+      <Tab.Screen name="Home Page" component={HomeMainContent} />
+      <Tab.Screen name="Add Book" component={AddBook} />
+    </Tab.Navigator>
   );
 }
 

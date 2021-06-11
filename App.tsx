@@ -1,25 +1,19 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './pages/Home';
-import AddBook from './pages/AddBook';
-
-export const HideTabBar = createContext({} as { showTabBar: boolean, setshowTabBar: React.Dispatch<React.SetStateAction<boolean>> });
+import { createStackNavigator } from '@react-navigation/stack';
+import BookDetails from './pages/BookDetails';
 
 export default function App() {
 
-  const Tab = createBottomTabNavigator();
-
-  const [showTabBar, setshowTabBar] = useState(true);
+  const Stack = createStackNavigator();
 
   return (
-    <HideTabBar.Provider value={{ showTabBar: showTabBar, setshowTabBar: setshowTabBar }}>
-      <NavigationContainer>
-        <Tab.Navigator initialRouteName="Home">
-          <Tab.Screen name="Home" component={Home} options={{ tabBarVisible: showTabBar }} />
-          <Tab.Screen name="Add Book" component={AddBook} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </HideTabBar.Provider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+        <Stack.Screen name="Book Details" component={BookDetails} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
