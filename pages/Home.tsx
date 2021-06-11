@@ -13,9 +13,9 @@ export default function Home() {
   const Stack = createStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName="Main">
-      <Stack.Screen name="Main" component={HomeMainContent} />
-      <Stack.Screen name="Book Details" component={BookDetails} />
+    <Stack.Navigator initialRouteName="Main" >
+      <Stack.Screen name="Main" component={HomeMainContent} options={{ headerShown: false }} />
+      <Stack.Screen name="Book Details" component={BookDetails} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
