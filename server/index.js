@@ -36,13 +36,13 @@ db.once('open', function () {
       if (Number(req.query.p) >= 1 && Number(req.query.p) <= pages) {
         page = Number(req.query.p);
       } else {
-        res.status(400).json({ message: 'Incorrect paging parameter or page does not exist' });
+        return res.status(400).json({ message: 'Incorrect paging parameter or page does not exist' });
       }
     } else {
       page = 1;
     }
 
-    await Books.find({}, null, { sort: { name: 'asc' }, skip: (page - 1) * 15, limit: 15 }, async function (err, docs) {
+    await Books.find({}, null, { sort: { name: 'asc' }, skip: (page - 1) * 15, limit: 15 }, function (err, docs) {
       if (err) res.status(500).json({ message: 'Internal error' });
 
       res.status(200).json({
