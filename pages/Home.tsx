@@ -49,19 +49,23 @@ function HomeMainContent() {
 
   return (
     <View style={styles.container}>
+
       <View style={styles.searchView}>
         <Foundation name="magnifying-glass" size={24} color="#DCD8D8" />
         <TextInput style={styles.searchTextInput}></TextInput>
       </View>
-      <View style={styles.userNameView}>
-        <Text style={styles.userNameTextHi}>Hi, </Text>
+
+      <Text style={styles.userNameText}>
+        <Text >Hi, </Text>
         <Text style={styles.userNameTextName}>Mehmed Al Fatih 👋</Text>
-      </View>
+      </Text>
+      
       {loading ?
         <View style={styles.booksList}>
           {bookCardArr}
         </View> :
         <></>}
+
     </View>
   )
 }
@@ -72,13 +76,12 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight + 10,
     paddingLeft: 10,
     paddingRight: 10,
-    // backgroundColor: '#FFFCF9',
-    backgroundColor: '#fce299'
+    backgroundColor: '#F2F2F2',
   },
   searchView: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#FDFCFC',
     width: '100%',
     borderRadius: 20,
     paddingLeft: 10
@@ -90,15 +93,11 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 10
   },
-  userNameView: {
-    flexDirection: 'row',
+  userNameText: {
+    fontSize: 25,
     marginTop: 10
   },
-  userNameTextHi: {
-    fontSize: 25,
-  },
   userNameTextName: {
-    fontSize: 25,
     color: '#fe6a79'
   },
   booksList: {

@@ -21,10 +21,13 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   titleText: {
-    fontWeight: 'bold'
+    color: 'rgba(49, 49, 49, 0.8)',
+    fontWeight: 'bold',
+    fontSize: 12
   },
   authorText: {
-    fontSize: 12,
+    color: 'rgba(49, 49, 49, 0.8)',
+    fontSize: 10,
     fontWeight: 'bold'
   }
 });

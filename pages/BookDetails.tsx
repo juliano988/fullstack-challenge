@@ -3,7 +3,7 @@ import Constants from 'expo-constants';
 import React, { useContext, useEffect } from 'react';
 import { Button, Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Book } from '../customTypes';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, Feather } from '@expo/vector-icons';
 //@ts-ignore
 import detailsBookBg from '../assets/detailsBookBg.png';
 
@@ -38,7 +38,20 @@ export default function BookDetails() {
 
         <View style={styles.bookDetailsMenuView}>
           <View style={styles.bookDetailsMenuContent}>
-
+            <TouchableOpacity style={styles.bookDetailsMenuButton}>
+              <Feather name="book-open" size={24} color="#CFCBD2" />
+              <Text style={styles.bookDetailsMenuButtonText}>Read</Text>
+            </TouchableOpacity>
+            <View style={styles.bookDetailsMenuBar}></View>
+            <TouchableOpacity style={styles.bookDetailsMenuButton}>
+              <FontAwesome5 name="headphones" size={24} color="#CFCBD2" />
+              <Text style={styles.bookDetailsMenuButtonText}>Listen</Text>
+            </TouchableOpacity>
+            <View style={styles.bookDetailsMenuBar}></View>
+            <TouchableOpacity style={styles.bookDetailsMenuButton}>
+              <Feather name="share" size={24} color="#CFCBD2" />
+              <Text style={styles.bookDetailsMenuButtonText}>Share</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -50,7 +63,7 @@ export default function BookDetails() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFCF9',
+    backgroundColor: '#F2F2F2',
     marginTop: -35
   },
   backArrow: {
@@ -80,7 +93,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   bookTitlePlusSubtitle: {
-    fontSize: 20
+    fontSize: 24
   },
   bookTitle: {
     fontWeight: 'bold'
@@ -90,25 +103,50 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: '#fe6a79'
   },
-  bookDescriptionText:{
+  bookDescriptionText: {
+    color: 'rgba(49, 49, 49, 0.6)',
+    fontSize: 14,
     paddingTop: 10,
     paddingBottom: 80,
     lineHeight: 20
   },
-  bookDetailsMenuView:{
+  bookDetailsMenuView: {
     position: 'absolute',
     bottom: 20,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width:'100%',
+    width: '100%',
     paddingLeft: 20,
     paddingRight: 20
   },
-  bookDetailsMenuContent:{
+  bookDetailsMenuContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
     width: '100%',
     height: 50,
-    backgroundColor: 'blue',
-    borderRadius: 5
+    backgroundColor: 'white',
+    borderRadius: 5,
+    shadowColor: '#6B674620',
+    shadowOffset: {width: 3, height:3},
+    shadowRadius: 23,
+    elevation: 10
+  },
+  bookDetailsMenuButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexBasis: '33%',
+    color: 'rgba(151, 151, 151, 0.2)'
+  },
+  bookDetailsMenuBar: {
+    backgroundColor: 'rgba(151, 151, 151, 0.2)',
+    width: 2,
+    height: 16,
+  },
+  bookDetailsMenuButtonText: {
+    color: '#3F4043',
+    fontWeight: 'bold',
+    marginLeft: 5
   }
 });
