@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { Foundation } from '@expo/vector-icons';
+import { Foundation, Feather, Octicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { Book, PageMeta } from '../customTypes';
 import BookCard from '../components/BookCard';
@@ -13,9 +13,34 @@ export default function Home() {
   const Tab = createBottomTabNavigator();
 
   return (
-    <Tab.Navigator initialRouteName="Home Page" >
-      <Tab.Screen name="Home Page" component={HomeMainContent} />
-      <Tab.Screen name="Add Book" component={AddBook} />
+    <Tab.Navigator
+      initialRouteName="Home Page"
+      tabBarOptions={{
+        activeTintColor: 'black',
+        inactiveTintColor: '#BFBEBF',
+        activeBackgroundColor: '#F2F2F2',
+        inactiveBackgroundColor: '#F2F2F2',
+        labelStyle: { fontSize: 12 },
+        style: {
+          borderTopWidth: 0,
+          elevation: 0
+        }
+      }}
+    >
+      <Tab.Screen
+        name="Home Page"
+        component={HomeMainContent}
+        options={{
+          tabBarIcon: ({ focused }) => <Feather name="home" size={26} color={focused ? 'black' : '#BFBEBF'} />
+        }}
+      />
+      <Tab.Screen
+        name="Add Book"
+        component={AddBook}
+        options={{
+          tabBarIcon: ({ focused }) => <Octicons name="plus" size={26} color={focused ? 'black' : '#BFBEBF'} />
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -59,7 +84,7 @@ function HomeMainContent() {
         <Text >Hi, </Text>
         <Text style={styles.userNameTextName}>Mehmed Al Fatih 👋</Text>
       </Text>
-      
+
       {loading ?
         <View style={styles.booksList}>
           {bookCardArr}
@@ -84,7 +109,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDFCFC',
     width: '100%',
     borderRadius: 20,
-    paddingLeft: 10
+    paddingLeft: 10,
+    shadowColor: 'rgba(212, 173, 134, 0.122623)',
+    shadowOffset: { width: 3, height: 5 },
+    shadowRadius: 80,
+    elevation: 10
   },
   searchTextInput: {
     height: 40,
