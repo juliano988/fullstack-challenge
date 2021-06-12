@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
+import { color } from 'react-native-reanimated';
 
 export default StyleSheet.create({
   container: {
@@ -29,6 +30,25 @@ export default StyleSheet.create({
     paddingRight: 5,
     borderRadius: 5,
     backgroundColor: '#FDFCFC'
+  },
+  textInputFieldWrong:{
+    fontSize: 16,
+    height: 50,
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderRadius: 5,
+    backgroundColor: '#FDFCFC',
+    borderColor: 'red',
+    borderStyle: 'solid',
+    borderWidth: 1
+  },
+  wrongLabelView:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    color: 'red'
+  },
+  wrongLabelText:{
+    color: 'red'
   },
   multilineTextInput:{
     height: 200,
