@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <Tab.Navigator
-      initialRouteName="Add Book"
+      initialRouteName="Home Page"
       tabBarOptions={{
         activeTintColor: 'black',
         inactiveTintColor: '#BFBEBF',

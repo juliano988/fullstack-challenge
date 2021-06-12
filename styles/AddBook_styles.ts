@@ -51,7 +51,7 @@ export default StyleSheet.create({
     color: 'red'
   },
   multilineTextInput:{
-    height: 200,
+    height: 190,
     textAlignVertical: 'top',
     paddingTop: 5,
     paddingLeft: 5,
@@ -64,6 +64,7 @@ export default StyleSheet.create({
     paddingTop: 5,
     paddingLeft: 5,
     borderRadius: 5,
+    marginBottom: 10,
     backgroundColor: '#FDFCFC',
     borderColor: 'red',
     borderStyle: 'solid',
@@ -77,7 +78,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    marginTop: 10
+    marginTop: 20
   },
   getCoverButton:{
     alignItems: 'center',
