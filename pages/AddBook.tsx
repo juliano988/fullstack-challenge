@@ -64,10 +64,11 @@ export default function AddBook() {
       allowsEditing: true,
       aspect: [100, 150],
       base64: true,
-      quality: 0.5,
+      quality: 0.1,
     });
     if (!result.cancelled) {
-      setbookCover(result.base64 ? 'data:image/jpeg;base64,' + result.base64 : result.uri);
+      console.log(result.base64 ? 'data:image/png;base64,' + result.base64 : result.uri)
+      setbookCover(result.base64 ? 'data:image/png;base64,' + result.base64 : result.uri);
     }
   };
 
