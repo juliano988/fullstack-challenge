@@ -37,7 +37,8 @@ export default StyleSheet.create({
   },
   booksList: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
     marginTop: 10
   }
 });

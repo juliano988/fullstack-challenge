@@ -54,7 +54,20 @@ export default StyleSheet.create({
     height: 200,
     textAlignVertical: 'top',
     paddingTop: 5,
-    paddingLeft: 5
+    paddingLeft: 5,
+    borderRadius: 5,
+    backgroundColor: '#FDFCFC',
+  },
+  multilineTextInputWrong:{
+    height: 200,
+    textAlignVertical: 'top',
+    paddingTop: 5,
+    paddingLeft: 5,
+    borderRadius: 5,
+    backgroundColor: '#FDFCFC',
+    borderColor: 'red',
+    borderStyle: 'solid',
+    borderWidth: 1
   },
   coverPreviewText:{
     fontSize: 16,

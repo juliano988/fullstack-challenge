@@ -13,9 +13,18 @@ export default function AddBook() {
   const scrollViewRef = useRef(null);
 
   const { control, handleSubmit, formState: { errors } } = useForm();
+
   const onSubmit = (data: Book) => {
     data.cover = bookCover as string;
-    console.log(encodeURI(JSON.stringify(data)))
+    const stringData = (JSON.stringify(data));
+
+    fetch('http://192.168.0.38:3000/api/insert-book', { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: stringData })
+      .then(function (res) {
+        return res.json()
+      }).then(function (val) {
+        console.log(val)
+      })
+
   };
 
   useEffect(() => {
@@ -76,7 +85,7 @@ export default function AddBook() {
           control={control}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              style={styles.textInputField}
+              style={errors.title ? styles.textInputFieldWrong : styles.textInputField}
               onChangeText={value => onChange(value)}
               value={value}
             />
@@ -92,7 +101,7 @@ export default function AddBook() {
           control={control}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              style={styles.textInputField}
+              style={errors.title ? styles.textInputFieldWrong : styles.textInputField}
               onChangeText={value => onChange(value)}
               value={value}
             />
@@ -104,7 +113,7 @@ export default function AddBook() {
         {errors.author && <View style={styles.wrongLabelView}><Foundation name="alert" size={24} color="red" /><Text style={styles.wrongLabelText}> Field Author is required.</Text></View>}
 
         <Text style={styles.inputLabel}>Description</Text>
-        <View style={{ backgroundColor: 'white' }}>
+        <View style={errors.description ? styles.multilineTextInputWrong : styles.multilineTextInput}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (

@@ -25,6 +25,8 @@ db.once('open', function () {
   // routes(Books);
 
   app.use(cors());
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
 
   app.get('/api/list-books', async function (req, res) {
 
@@ -51,6 +53,17 @@ db.once('open', function () {
       })
 
     })
+
+  })
+
+  app.post('/api/insert-book', async function (req, res) {
+
+    const book = new Books(req.body);
+
+    await book.save(function (err, data) {
+      if (err) return res.status(500).json({ message: 'Internal error' });
+      res.status(200).json({ message: 'Book added!' })
+    });
 
   })
 
