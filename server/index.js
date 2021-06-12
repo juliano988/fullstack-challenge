@@ -44,7 +44,7 @@ db.once('open', function () {
       page = 1;
     }
 
-    await Books.find({}, null, { sort: { name: 'asc' }, skip: (page - 1) * 15, limit: 15 }, function (err, docs) {
+    await Books.find({}, null, { sort: { title: 'asc' }, skip: (page - 1) * 15, limit: 15 }, function (err, docs) {
       if (err) res.status(500).json({ message: 'Internal error' });
 
       res.status(200).json({

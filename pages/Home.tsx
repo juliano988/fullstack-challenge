@@ -4,7 +4,7 @@ import { Text, TextInput, View } from 'react-native';
 import { Foundation, Feather, Octicons } from '@expo/vector-icons';
 import { Book, PageMeta } from '../customTypes';
 import BookCard from '../components/BookCard';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AddBook from './AddBook';
 
@@ -48,11 +48,13 @@ export default function Home() {
 function HomeMainContent() {
 
   const navigation = useNavigation();
+  const route = useRoute();
 
   const [loading, setloading] = useState<boolean>(false);
   const [bookCardArr, setbookCardArr] = useState<Array<typeof BookCard>>();
 
   useEffect(function () {
+    setbookCardArr([]);
     fetch('http://192.168.0.38:3000/api/list-books').then(function (res) {
       return res.json();
     }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
@@ -70,7 +72,7 @@ function HomeMainContent() {
       setbookCardArr(tempArr);
       setloading(true);
     })
-  }, [])
+  }, [(route.params as { bookAdded: boolean })?.bookAdded])
 
   return (
     <View style={styles.container}>

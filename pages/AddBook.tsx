@@ -6,23 +6,34 @@ import { Button, Platform, SafeAreaView, ScrollView, Text, TextInput, TouchableO
 import { useForm, Controller } from "react-hook-form";
 import { Foundation } from '@expo/vector-icons';
 import { Book } from '../customTypes';
+import { useNavigation } from '@react-navigation/native';
 
 export default function AddBook() {
 
+  const navigation = useNavigation();
+
   const [bookCover, setbookCover] = useState<string>();
+  const [loading, setloading] = useState<boolean>(false);
+  const [bookAdded, setbookAdded] = useState(false);
+
   const scrollViewRef = useRef(null);
 
-  const { control, handleSubmit, formState: { errors } } = useForm();
+  const { control, handleSubmit, reset, formState: { errors } } = useForm();
 
   const onSubmit = (data: Book) => {
     data.cover = bookCover as string;
     const stringData = (JSON.stringify(data));
 
+    setloading(true)
     fetch('http://192.168.0.38:3000/api/insert-book', { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: stringData })
       .then(function (res) {
         return res.json()
       }).then(function (val) {
-        console.log(val)
+        reset({ title: '', subtitle: '', author: '', description: '' });
+        setbookCover(undefined);
+        setloading(false);
+        setbookAdded(!bookAdded);
+        navigation.navigate('Home Page',{bookAdded: bookAdded})
       })
 
   };
@@ -138,14 +149,14 @@ export default function AddBook() {
           </View>}
 
         <TouchableOpacity style={styles.getCoverButton} onPress={pickImage}>
-          <Text style={styles.getCoverButtonText} >{bookCover ? 'Change the book cover' : 'Select the book cover'}</Text>
+          <Text style={styles.getCoverButtonText} >{bookCover ? 'Change' : 'Select'} the book cover</Text>
         </TouchableOpacity>
 
       </ScrollView>
 
-      <View style={{ opacity: bookCover ? 1 : 0.5 }}>
-        <TouchableOpacity disabled={bookCover ? false : true} style={styles.submitButton} onPress={handleSubmit(onSubmit)} >
-          <Text style={styles.submitButtonText}>Add new book</Text>
+      <View style={{ opacity: bookCover && !loading ? 1 : 0.5 }}>
+        <TouchableOpacity disabled={bookCover && !loading ? false : true} style={styles.submitButton} onPress={handleSubmit(onSubmit)} >
+          <Text style={styles.submitButtonText}>{loading ? 'Adding the book...' : 'Add new book'}</Text>
         </TouchableOpacity>
       </View>
 
