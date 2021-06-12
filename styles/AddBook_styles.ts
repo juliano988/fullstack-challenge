@@ -36,6 +36,30 @@ export default StyleSheet.create({
     paddingTop: 5,
     paddingLeft: 5
   },
+  coverPreviewText:{
+    fontSize: 16,
+    fontWeight: '600'
+  },
+  coverPreviewView:{
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginTop: 10
+  },
+  getCoverButton:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 35,
+    borderRadius: 5,
+    backgroundColor: '#0d6efd',
+    marginTop: 20,
+    marginBottom: 5
+  },
+  getCoverButtonText:{
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '600'
+  },
   submitButton:{
     alignItems: 'center',
     justifyContent: 'center',
