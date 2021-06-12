@@ -22,6 +22,7 @@ export default function AddBook() {
 
   const onSubmit = (data: Book) => {
     data.cover = bookCover as string;
+
     const stringData = (JSON.stringify(data));
 
     setloading(true)
@@ -96,16 +97,14 @@ export default function AddBook() {
           control={control}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              style={errors.title ? styles.textInputFieldWrong : styles.textInputField}
+              style={styles.textInputField}
               onChangeText={value => onChange(value)}
               value={value}
             />
           )}
           name="subtitle"
-          rules={{ required: true }}
           defaultValue=""
         />
-        {errors.subtitle && <View style={styles.wrongLabelView}><Foundation name="alert" size={24} color="red" /><Text style={styles.wrongLabelText}> Field Subtitle is required.</Text></View>}
 
         <Text style={styles.inputLabel}>Author</Text>
         <Controller

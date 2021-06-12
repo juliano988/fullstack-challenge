@@ -28,7 +28,7 @@ export default function BookDetails() {
         <View style={styles.bookInfoView}>
           <ScrollView style={{ height: 1 }}>
             <Text style={styles.bookTitlePlusSubtitle}>
-              <Text style={styles.bookTitle}>{book.title}: </Text>
+              <Text style={styles.bookTitle}>{book.title}{book.subtitle && ': '}</Text>
               <Text>{book.subtitle}</Text>
             </Text>
             <Text style={styles.bookAuthor}>{book.author}</Text>
