@@ -34,11 +34,5 @@ export default StyleSheet.create({
   },
   userNameTextName: {
     color: '#fe6a79'
-  },
-  booksList: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    marginTop: 10
   }
 });

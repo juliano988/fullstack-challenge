@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/Home_styles';
-import { Text, TextInput, View } from 'react-native';
+import { FlatList, SafeAreaView, Text, TextInput, View } from 'react-native';
 import { Foundation, Feather, Octicons } from '@expo/vector-icons';
 import { Book, PageMeta } from '../customTypes';
 import BookCard from '../components/BookCard';
@@ -51,31 +51,20 @@ function HomeMainContent() {
   const route = useRoute();
 
   const [loading, setloading] = useState<boolean>(false);
-  const [bookCardArr, setbookCardArr] = useState<Array<typeof BookCard>>();
+  const [booksArr, setbooksArr] = useState<Array<Book>>();
 
   useEffect(function () {
-    setbookCardArr([]);
+    setbooksArr([]);
     fetch('http://192.168.0.38:3000/api/list-books').then(function (res) {
       return res.json();
     }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
-      const tempArr: Array<typeof BookCard> = [];
-      data.books.forEach(function (book, i, arr) {
-        tempArr.push(
-          <BookCard
-            cover={book.cover}
-            title={book.title}
-            author={book.author}
-            goBookDetails={() => navigation.navigate('Book Details', { book })}
-            key={i}
-          /> as unknown as typeof BookCard)
-      })
-      setbookCardArr(tempArr);
+      setbooksArr(data.books)
       setloading(true);
     })
   }, [(route.params as { bookAdded: boolean })?.bookAdded])
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
 
       <View style={styles.searchView}>
         <Foundation name="magnifying-glass" size={24} color="#DCD8D8" />
@@ -88,11 +77,20 @@ function HomeMainContent() {
       </Text>
 
       {loading ?
-        <View style={styles.booksList}>
-          {bookCardArr}
-        </View> :
+        <FlatList
+          numColumns={3}
+          keyExtractor={(item,index)=>index.toString(10)}
+          data={booksArr}
+          renderItem={({ item, index, separators }) => (
+            <BookCard
+              cover={item.cover}
+              title={item.title}
+              author={item.author}
+              goBookDetails={() => navigation.navigate('Book Details', { item })}
+            />)}
+        /> :
         <></>}
 
-    </View>
+    </SafeAreaView>
   )
 }

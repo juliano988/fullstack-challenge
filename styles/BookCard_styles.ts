@@ -2,7 +2,10 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   bookCardContainer:{
-    margin: 5
+    marginTop: 5,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 5,
   },
   imageStyle: {
     width: 100,

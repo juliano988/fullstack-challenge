@@ -11,7 +11,7 @@ export default function BookDetails() {
 
   const navigation = useNavigation();
 
-  const { book } = useRoute().params as { book: Book };
+  const { item } = useRoute().params as { item: Book };
 
   return (
     <>
@@ -22,17 +22,17 @@ export default function BookDetails() {
         </TouchableOpacity>
 
         <ImageBackground style={styles.bookBgImgView} source={detailsBookBg}>
-          <Image style={styles.imageStyle} source={{ uri: book.cover }}></Image>
+          <Image style={styles.imageStyle} source={{ uri: item.cover }}></Image>
         </ImageBackground>
 
         <View style={styles.bookInfoView}>
           <ScrollView style={{ height: 1 }}>
             <Text style={styles.bookTitlePlusSubtitle}>
-              <Text style={styles.bookTitle}>{book.title}{book.subtitle && ': '}</Text>
-              <Text>{book.subtitle}</Text>
+              <Text style={styles.bookTitle}>{item.title}{item.subtitle && ': '}</Text>
+              <Text>{item.subtitle}</Text>
             </Text>
-            <Text style={styles.bookAuthor}>{book.author}</Text>
-            <Text style={styles.bookDescriptionText}>{book.description}</Text>
+            <Text style={styles.bookAuthor}>{item.author}</Text>
+            <Text style={styles.bookDescriptionText}>{item.description}</Text>
           </ScrollView>
         </View>
 
