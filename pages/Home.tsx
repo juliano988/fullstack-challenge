@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Home_styles';
 import { FlatList, NativeSyntheticEvent, SafeAreaView, Text, TextInput, TextInputChangeEventData, View } from 'react-native';
-import { Foundation, Feather, Octicons } from '@expo/vector-icons';
+import { Foundation, Feather, Octicons, Ionicons } from '@expo/vector-icons';
 import { Book, PageMeta } from '../customTypes';
 import BookCard from '../components/BookCard';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AddBook from './AddBook';
+import Profile from './Profile';
 
 export default function Home() {
 
@@ -31,6 +32,7 @@ export default function Home() {
         name="Home Page"
         component={HomeMainContent}
         options={{
+          tabBarLabel:"Home",
           tabBarIcon: ({ focused }) => <Feather name="home" size={26} color={focused ? 'black' : '#BFBEBF'} />
         }}
       />
@@ -39,6 +41,13 @@ export default function Home() {
         component={AddBook}
         options={{
           tabBarIcon: ({ focused }) => <Octicons name="plus" size={26} color={focused ? 'black' : '#BFBEBF'} />
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({ focused }) => <Ionicons name="person-outline" size={24} color={focused ? 'black' : '#BFBEBF'} />
         }}
       />
     </Tab.Navigator>
@@ -94,8 +103,7 @@ function HomeMainContent() {
 
   function handleFlatListEnd() {
     if ((booksMeta?.page as number) < (booksMeta?.pages as number)) {
-      console.log('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || '') )
-      fetch('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || '') ).then(function (res) {
+      fetch('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || '')).then(function (res) {
         return res.json();
       }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
         setbooksMeta(data.meta)
