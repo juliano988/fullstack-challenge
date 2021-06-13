@@ -73,6 +73,7 @@ function HomeMainContent() {
     setsearchQuery('');
     (queryTextInputRef.current as unknown as TextInput).clear();
 
+    setloading(true);
     fetch('http://192.168.0.38:3000/api/list-books').then(function (res) {
       return res.json();
     }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
@@ -142,8 +143,9 @@ function HomeMainContent() {
         <Text style={styles.userNameTextName}>Mehmed Al Fatih 👋</Text>
       </Text>
 
+
       {!loading ?
-        (!(booksArr as Array<Book>)[0].fake ?
+        (!((booksArr) as Array<Book>).length || !((booksArr) as Array<Book>)[0].hasOwnProperty('fake') ?
           <FlatList
             numColumns={3}
             keyExtractor={(item, index) => index.toString(10)}
