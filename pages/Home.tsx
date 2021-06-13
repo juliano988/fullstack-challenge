@@ -59,7 +59,7 @@ function HomeMainContent() {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const [loading, setloading] = useState<boolean>(false);
+  const [loading, setloading] = useState<boolean>(true);
   const [booksMeta, setbooksMeta] = useState<PageMeta>();
   const [booksArr, setbooksArr] = useState<Array<Book>>();
   const [searchQuery, setsearchQuery] = useState<string>();
@@ -82,7 +82,7 @@ function HomeMainContent() {
         actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
       }
       setbooksArr(actualBookList)
-      setloading(true);
+      setloading(false);
     })
 
   }, [(route.params as { bookAdded: boolean })?.bookAdded])
@@ -103,7 +103,7 @@ function HomeMainContent() {
           actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
         }
         setbooksArr(actualBookList);
-        setloading(true);
+        setloading(false);
       })
     }, 1000));
 
@@ -111,7 +111,6 @@ function HomeMainContent() {
 
   function handleFlatListEnd() {
     if ((booksMeta?.page as number) < (booksMeta?.pages as number)) {
-      console.log('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || ''))
       fetch('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || '')).then(function (res) {
         return res.json();
       }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
@@ -122,7 +121,7 @@ function HomeMainContent() {
           actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
         }
         setbooksArr(actualBookList);
-        setloading(true);
+        setloading(false);
       })
     }
   }
@@ -140,23 +139,30 @@ function HomeMainContent() {
         <Text style={styles.userNameTextName}>Mehmed Al Fatih 👋</Text>
       </Text>
 
-      {loading ?
-        <FlatList
-          numColumns={3}
-          keyExtractor={(item, index) => index.toString(10)}
-          data={booksArr}
-          renderItem={({ item, index, separators }) => (
-            <BookCard
-              cover={item.cover}
-              title={item.title}
-              author={item.author}
-              goBookDetails={() => navigation.navigate('Book Details', { item })}
-              fake={item.fake}
-            />)}
-          onEndReached={handleFlatListEnd}
-          onEndReachedThreshold={0.1}
-        /> :
-        <></>}
+      {!loading ?
+        (!(booksArr as Array<Book>)[0].fake ?
+          <FlatList
+            numColumns={3}
+            keyExtractor={(item, index) => index.toString(10)}
+            data={booksArr}
+            renderItem={({ item, index, separators }) => (
+              <BookCard
+                cover={item.cover}
+                title={item.title}
+                author={item.author}
+                goBookDetails={() => navigation.navigate('Book Details', { item })}
+                fake={item.fake}
+              />)}
+            onEndReached={handleFlatListEnd}
+            onEndReachedThreshold={0.1}
+          /> :
+          <View style={styles.searchErroAndLoadView}>
+            <Text style={styles.searchErroAndLoadText}>Your search hasn't return any result.</Text>
+          </View>
+        ) :
+        <View style={styles.searchErroAndLoadView}>
+          <Text style={styles.searchErroAndLoadText}>Loading...</Text>
+        </View>}
 
     </SafeAreaView>
   )

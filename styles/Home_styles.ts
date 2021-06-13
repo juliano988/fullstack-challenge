@@ -34,5 +34,13 @@ export default StyleSheet.create({
   },
   userNameTextName: {
     color: '#fe6a79'
+  },
+  searchErroAndLoadView:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  searchErroAndLoadText:{
+    fontSize: 20
   }
 });

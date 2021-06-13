@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.5.2",
+    "@motify/skeleton": "^0.11.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/material-bottom-tabs": "^5.3.15",
@@ -19,6 +20,8 @@
     "expo": "~41.0.1",
     "expo-document-picker": "~9.1.2",
     "expo-image-picker": "~10.1.4",
+    "expo-linear-gradient": "~9.1.0",
+    "expo-progress": "^0.0.2",
     "expo-status-bar": "~1.0.4",
     "express": "^4.17.1",
     "mongoose": "^5.12.13",
