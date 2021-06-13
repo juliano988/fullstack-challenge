@@ -32,7 +32,7 @@ export default function Home() {
         name="Home Page"
         component={HomeMainContent}
         options={{
-          tabBarLabel:"Home",
+          tabBarLabel: "Home",
           tabBarIcon: ({ focused }) => <Feather name="home" size={26} color={focused ? 'black' : '#BFBEBF'} />
         }}
       />
@@ -65,8 +65,13 @@ function HomeMainContent() {
   const [searchQuery, setsearchQuery] = useState<string>();
   const [searchTimeOut, setsearchTimeOut] = useState<NodeJS.Timeout>();
 
+  const queryTextInputRef = useRef(null);
+
   useEffect(function () {
     setbooksArr([]);
+    setsearchQuery('');
+    (queryTextInputRef.current as unknown as TextInput).clear();
+
     fetch('http://192.168.0.38:3000/api/list-books').then(function (res) {
       return res.json();
     }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
@@ -79,12 +84,14 @@ function HomeMainContent() {
       setbooksArr(actualBookList)
       setloading(true);
     })
+
   }, [(route.params as { bookAdded: boolean })?.bookAdded])
 
   function handleChangeQuery(query: string) {
     setsearchQuery(query);
 
     clearTimeout(searchTimeOut as NodeJS.Timeout);
+
     setsearchTimeOut(setTimeout(function () {
       fetch('http://192.168.0.38:3000/api/list-books?q=' + query).then(function (res) {
         return res.json();
@@ -98,11 +105,13 @@ function HomeMainContent() {
         setbooksArr(actualBookList);
         setloading(true);
       })
-    }, 1000))
+    }, 1000));
+
   }
 
   function handleFlatListEnd() {
     if ((booksMeta?.page as number) < (booksMeta?.pages as number)) {
+      console.log('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || ''))
       fetch('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || '')).then(function (res) {
         return res.json();
       }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
@@ -123,7 +132,7 @@ function HomeMainContent() {
 
       <View style={styles.searchView}>
         <Foundation name="magnifying-glass" size={24} color="#DCD8D8" />
-        <TextInput style={styles.searchTextInput} onChangeText={(query) => handleChangeQuery(query)}></TextInput>
+        <TextInput ref={queryTextInputRef} style={styles.searchTextInput} onChangeText={(query) => handleChangeQuery(query)}></TextInput>
       </View>
 
       <Text style={styles.userNameText}>
