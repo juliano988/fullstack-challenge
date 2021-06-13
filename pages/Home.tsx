@@ -80,8 +80,10 @@ function HomeMainContent() {
       setbooksMeta(data.meta)
       const actualBookList = data.books.slice();
       const actualBookListArrLength = actualBookList.length;
-      for (let i = 1; i <= (3 - (actualBookListArrLength % 3)); i++) {
-        actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
+      if (actualBookListArrLength % 3) {
+        for (let i = 1; i <= (3 - (actualBookListArrLength % 3)); i++) {
+          actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
+        }
       }
       setbooksArr(actualBookList)
       setloading(false);
@@ -94,6 +96,7 @@ function HomeMainContent() {
 
     clearTimeout(searchTimeOut as NodeJS.Timeout);
 
+    setpaginationLoading(true);
     setsearchTimeOut(setTimeout(function () {
       fetch('http://192.168.0.38:3000/api/list-books?q=' + query).then(function (res) {
         return res.json();
@@ -101,10 +104,13 @@ function HomeMainContent() {
         setbooksMeta(data.meta)
         const actualBookList = data.books.slice();
         const actualBookListArrLength = actualBookList.length;
-        for (let i = 1; i <= (3 - (actualBookListArrLength % 3)); i++) {
-          actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
+        if (actualBookListArrLength % 3) {
+          for (let i = 1; i <= (3 - (actualBookListArrLength % 3)); i++) {
+            actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
+          }
         }
         setbooksArr(actualBookList);
+        setpaginationLoading(false);
       })
     }, 1000));
 
@@ -120,13 +126,15 @@ function HomeMainContent() {
         setbooksMeta(data.meta)
         const actualBookList = [...booksArr as Array<Book>, ...data.books];
         const actualBookListArrLength = actualBookList.length;
-        for (let i = 1; i <= (3 - (actualBookListArrLength % 3)); i++) {
-          actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
+        if (actualBookListArrLength % 3) {
+          for (let i = 1; i <= (3 - (actualBookListArrLength % 3)); i++) {
+            actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
+          }
         }
         setbooksArr(actualBookList);
         setpaginationLoading(false);
       })
-      
+
     }
   }
 
@@ -169,7 +177,7 @@ function HomeMainContent() {
           <Text style={styles.searchErroAndLoadText}>Loading...</Text>
         </View>}
 
-        {paginationLoading && <View style={styles.searchLoadingView}><Text>Looking for new books...</Text></View>}
+      {paginationLoading && <View style={styles.searchLoadingView}><Text>Looking for new books...</Text></View>}
 
     </SafeAreaView>
   )

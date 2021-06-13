@@ -9,6 +9,7 @@ export default StyleSheet.create({
   },
   bookCardContainerFake:{
     width: 100,
+    height: 50,
     marginTop: 5,
     marginLeft: 'auto',
     marginRight: 'auto',
