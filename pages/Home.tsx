@@ -63,6 +63,7 @@ function HomeMainContent() {
   const [booksMeta, setbooksMeta] = useState<PageMeta>();
   const [booksArr, setbooksArr] = useState<Array<Book>>();
   const [searchQuery, setsearchQuery] = useState<string>();
+  const [paginationLoading, setpaginationLoading] = useState<boolean>(false);
   const [searchTimeOut, setsearchTimeOut] = useState<NodeJS.Timeout>();
 
   const queryTextInputRef = useRef(null);
@@ -103,7 +104,6 @@ function HomeMainContent() {
           actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
         }
         setbooksArr(actualBookList);
-        setloading(false);
       })
     }, 1000));
 
@@ -111,6 +111,8 @@ function HomeMainContent() {
 
   function handleFlatListEnd() {
     if ((booksMeta?.page as number) < (booksMeta?.pages as number)) {
+      setpaginationLoading(true);
+
       fetch('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || '')).then(function (res) {
         return res.json();
       }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
@@ -121,8 +123,9 @@ function HomeMainContent() {
           actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
         }
         setbooksArr(actualBookList);
-        setloading(false);
+        setpaginationLoading(false);
       })
+      
     }
   }
 
@@ -163,6 +166,8 @@ function HomeMainContent() {
         <View style={styles.searchErroAndLoadView}>
           <Text style={styles.searchErroAndLoadText}>Loading...</Text>
         </View>}
+
+        {paginationLoading && <View style={styles.searchLoadingView}><Text>Looking for new books...</Text></View>}
 
     </SafeAreaView>
   )

@@ -44,15 +44,19 @@ db.once('open', function () {
       page = 1;
     }
 
-    await Books.find({title: new RegExp(req.query.q,'i')}, null, { sort: { title: 'asc' }, skip: (page - 1) * 15, limit: 15 }, function (err, docs) {
-      if (err) res.status(500).json({ message: 'Internal error' });
+    await Books.find(
+      { $or: [{ title: new RegExp(req.query.q, 'i') }, { subtitle: new RegExp(req.query.q, 'i') }, { author: new RegExp(req.query.q, 'i') }] },
+      null,
+      { sort: { title: 'asc', author: 'asc' }, skip: (page - 1) * 15, limit: 15 },
+      function (err, docs) {
+        if (err) res.status(500).json({ message: 'Internal error' });
 
-      res.status(200).json({
-        meta: { page: page, pages: pages, booksInPage: docs.length, books: books },
-        books: docs
+        res.status(200).json({
+          meta: { page: page, pages: pages, booksInPage: docs.length, books: books },
+          books: docs
+        })
+
       })
-
-    })
 
   })
 

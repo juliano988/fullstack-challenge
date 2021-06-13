@@ -42,5 +42,9 @@ export default StyleSheet.create({
   },
   searchErroAndLoadText:{
     fontSize: 20
+  },
+  searchLoadingView:{
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
