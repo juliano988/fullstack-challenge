@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Home_styles';
-import { FlatList, SafeAreaView, Text, TextInput, View } from 'react-native';
+import { FlatList, NativeSyntheticEvent, SafeAreaView, Text, TextInput, TextInputChangeEventData, View } from 'react-native';
 import { Foundation, Feather, Octicons } from '@expo/vector-icons';
 import { Book, PageMeta } from '../customTypes';
 import BookCard from '../components/BookCard';
@@ -53,6 +53,8 @@ function HomeMainContent() {
   const [loading, setloading] = useState<boolean>(false);
   const [booksMeta, setbooksMeta] = useState<PageMeta>();
   const [booksArr, setbooksArr] = useState<Array<Book>>();
+  const [searchQuery, setsearchQuery] = useState<string>();
+  const [searchTimeOut, setsearchTimeOut] = useState<NodeJS.Timeout>();
 
   useEffect(function () {
     setbooksArr([]);
@@ -70,9 +72,30 @@ function HomeMainContent() {
     })
   }, [(route.params as { bookAdded: boolean })?.bookAdded])
 
+  function handleChangeQuery(query: string) {
+    setsearchQuery(query);
+
+    clearTimeout(searchTimeOut as NodeJS.Timeout);
+    setsearchTimeOut(setTimeout(function () {
+      fetch('http://192.168.0.38:3000/api/list-books?q=' + query).then(function (res) {
+        return res.json();
+      }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
+        setbooksMeta(data.meta)
+        const actualBookList = data.books.slice();
+        const actualBookListArrLength = actualBookList.length;
+        for (let i = 1; i <= (3 - (actualBookListArrLength % 3)); i++) {
+          actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
+        }
+        setbooksArr(actualBookList);
+        setloading(true);
+      })
+    }, 1000))
+  }
+
   function handleFlatListEnd() {
     if ((booksMeta?.page as number) < (booksMeta?.pages as number)) {
-      fetch('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1)).then(function (res) {
+      console.log('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || '') )
+      fetch('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || '') ).then(function (res) {
         return res.json();
       }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
         setbooksMeta(data.meta)
@@ -92,7 +115,7 @@ function HomeMainContent() {
 
       <View style={styles.searchView}>
         <Foundation name="magnifying-glass" size={24} color="#DCD8D8" />
-        <TextInput style={styles.searchTextInput}></TextInput>
+        <TextInput style={styles.searchTextInput} onChangeText={(query) => handleChangeQuery(query)}></TextInput>
       </View>
 
       <Text style={styles.userNameText}>
