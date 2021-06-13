@@ -7,6 +7,13 @@ export default StyleSheet.create({
     marginRight: 'auto',
     marginBottom: 5,
   },
+  bookCardContainerFake:{
+    width: 100,
+    marginTop: 5,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 5,
+  },
   imageStyle: {
     width: 100,
     height: 150,

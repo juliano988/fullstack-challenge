@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Home_styles';
 import { FlatList, SafeAreaView, Text, TextInput, View } from 'react-native';
 import { Foundation, Feather, Octicons } from '@expo/vector-icons';
@@ -51,6 +51,7 @@ function HomeMainContent() {
   const route = useRoute();
 
   const [loading, setloading] = useState<boolean>(false);
+  const [booksMeta, setbooksMeta] = useState<PageMeta>();
   const [booksArr, setbooksArr] = useState<Array<Book>>();
 
   useEffect(function () {
@@ -58,10 +59,33 @@ function HomeMainContent() {
     fetch('http://192.168.0.38:3000/api/list-books').then(function (res) {
       return res.json();
     }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
-      setbooksArr(data.books)
+      setbooksMeta(data.meta)
+      const actualBookList = data.books.slice();
+      const actualBookListArrLength = actualBookList.length;
+      for (let i = 1; i <= (3 - (actualBookListArrLength % 3)); i++) {
+        actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
+      }
+      setbooksArr(actualBookList)
       setloading(true);
     })
   }, [(route.params as { bookAdded: boolean })?.bookAdded])
+
+  function handleFlatListEnd() {
+    if ((booksMeta?.page as number) < (booksMeta?.pages as number)) {
+      fetch('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1)).then(function (res) {
+        return res.json();
+      }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
+        setbooksMeta(data.meta)
+        const actualBookList = [...booksArr as Array<Book>, ...data.books];
+        const actualBookListArrLength = actualBookList.length;
+        for (let i = 1; i <= (3 - (actualBookListArrLength % 3)); i++) {
+          actualBookList?.push({ title: ' ', subtitle: ' ', author: ' ', description: ' ', cover: ' ', fake: true })
+        }
+        setbooksArr(actualBookList);
+        setloading(true);
+      })
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,7 +103,7 @@ function HomeMainContent() {
       {loading ?
         <FlatList
           numColumns={3}
-          keyExtractor={(item,index)=>index.toString(10)}
+          keyExtractor={(item, index) => index.toString(10)}
           data={booksArr}
           renderItem={({ item, index, separators }) => (
             <BookCard
@@ -87,7 +111,10 @@ function HomeMainContent() {
               title={item.title}
               author={item.author}
               goBookDetails={() => navigation.navigate('Book Details', { item })}
+              fake={item.fake}
             />)}
+          onEndReached={handleFlatListEnd}
+          onEndReachedThreshold={0.1}
         /> :
         <></>}
 

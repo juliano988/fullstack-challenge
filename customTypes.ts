@@ -4,7 +4,8 @@ export type Book = {
   subtitle: string,
   author: string,
   description: string,
-  cover: string
+  cover: string,
+  fake: boolean
 }
 
 export type PageMeta = {
