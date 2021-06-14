@@ -60,11 +60,11 @@ npx serve web-build
 
 ## Detalhes de desenvolvimento
 
-09/06 - 6 horas
-10/06 - 11 horas
-11/06 - 11 horas
-12/06 - 7 horas
-13/06 - 10 horas
-14/06 - 7 horas
+- 09/06 - 6 horas
+- 10/06 - 11 horas
+- 11/06 - 11 horas
+- 12/06 - 7 horas
+- 13/06 - 10 horas
+- 14/06 - 7 horas
 
 Total aproximado de horas de desenvolvimento: 52
