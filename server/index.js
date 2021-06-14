@@ -3,7 +3,6 @@ var cors = require('cors')
 const app = express();
 const port = 3000;
 const dotenv = require('dotenv').config();
-//-----------------------------
 const routes = require('./routs.js');
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -22,7 +21,6 @@ db.once('open', function () {
 
   const Books = mongoose.models.Books || mongoose.model('Books', bookSchema);
 
-  // routes(Books);
 
   app.use(cors());
   app.use(express.json({ limit: '200mb' }))
