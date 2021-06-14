@@ -57,3 +57,14 @@ npx serve web-build
         - `author` - Autor do livro
         - `description` - Descrição do livro
         - `cover` - Imagem da capa do livro em base64
+
+## Detalhes de desenvolvimento
+
+09/06 - 6 horas
+10/06 - 11 horas
+11/06 - 11 horas
+12/06 - 7 horas
+13/06 - 10 horas
+14/06 - 7 horas
+
+Total aproximado de horas de desenvolvimento: 52
