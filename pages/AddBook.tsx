@@ -111,7 +111,7 @@ export default function AddBook() {
           control={control}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              style={errors.title ? styles.textInputFieldWrong : styles.textInputField}
+              style={errors.author ? styles.textInputFieldWrong : styles.textInputField}
               onChangeText={value => onChange(value)}
               value={value}
             />
@@ -123,7 +123,7 @@ export default function AddBook() {
         {errors.author && <View style={styles.wrongLabelView}><Foundation name="alert" size={24} color="red" /><Text style={styles.wrongLabelText}> Field Author is required.</Text></View>}
 
         <Text style={styles.inputLabel}>Description</Text>
-        <View style={errors.description ? styles.multilineTextInputWrong : styles.multilineTextInput}>
+        <View style={errors.description ? styles.multilineTextInputViewWrong : styles.multilineTextInputView}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (

@@ -143,7 +143,7 @@ function HomeMainContent() {
 
       <View style={styles.searchView}>
         <Foundation name="magnifying-glass" size={24} color="#DCD8D8" />
-        <TextInput ref={queryTextInputRef} style={styles.searchTextInput} onChangeText={(query) => handleChangeQuery(query)}></TextInput>
+        <TextInput ref={queryTextInputRef} placeholder="Search book" style={styles.searchTextInput} onChangeText={(query) => handleChangeQuery(query)}></TextInput>
       </View>
 
       <Text style={styles.userNameText}>
@@ -151,14 +151,13 @@ function HomeMainContent() {
         <Text style={styles.userNameTextName}>Mehmed Al Fatih 👋</Text>
       </Text>
 
-
       {!loading ?
-        (!((booksArr) as Array<Book>).length || !((booksArr) as Array<Book>)[0].hasOwnProperty('fake') ?
+        (booksArr?.length ?
           <FlatList
             numColumns={3}
             keyExtractor={(item, index) => index.toString(10)}
             data={booksArr}
-            renderItem={({ item, index, separators }) => (
+            renderItem={({ item }) => (
               <BookCard
                 cover={item.cover}
                 title={item.title}
