@@ -7,6 +7,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Foundation } from '@expo/vector-icons';
 import { Book } from '../customTypes';
 import { useNavigation } from '@react-navigation/native';
+import { API_DOMAIN } from '../App';
 
 export default function AddBook() {
 
@@ -26,7 +27,7 @@ export default function AddBook() {
     const stringData = (JSON.stringify(data));
 
     setloading(true)
-    fetch('http://192.168.0.38:3000/api/insert-book', { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: stringData })
+    fetch(API_DOMAIN+'/api/insert-book', { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: stringData })
       .then(function (res) {
         return res.json()
       }).then(function (val) {

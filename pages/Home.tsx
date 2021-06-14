@@ -8,6 +8,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AddBook from './AddBook';
 import Profile from './Profile';
+import { API_DOMAIN } from '../App';
 
 export default function Home() {
 
@@ -74,7 +75,7 @@ function HomeMainContent() {
     (queryTextInputRef.current as unknown as TextInput).clear();
 
     setloading(true);
-    fetch('http://192.168.0.38:3000/api/list-books').then(function (res) {
+    fetch(API_DOMAIN+'/api/list-books').then(function (res) {
       return res.json();
     }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
       setbooksMeta(data.meta)
@@ -98,7 +99,7 @@ function HomeMainContent() {
 
     setpaginationLoading(true);
     setsearchTimeOut(setTimeout(function () {
-      fetch('http://192.168.0.38:3000/api/list-books?q=' + query).then(function (res) {
+      fetch(API_DOMAIN+'/api/list-books?q=' + query).then(function (res) {
         return res.json();
       }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
         setbooksMeta(data.meta)
@@ -120,7 +121,7 @@ function HomeMainContent() {
     if ((booksMeta?.page as number) < (booksMeta?.pages as number)) {
       setpaginationLoading(true);
 
-      fetch('http://192.168.0.38:3000/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || '')).then(function (res) {
+      fetch(API_DOMAIN+'/api/list-books?p=' + ((booksMeta?.page as number) + 1) + '&q=' + (searchQuery || '')).then(function (res) {
         return res.json();
       }).then(function (data: { meta: PageMeta, books: Array<Book> }) {
         setbooksMeta(data.meta)

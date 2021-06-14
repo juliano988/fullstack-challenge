@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import { createStackNavigator } from '@react-navigation/stack';
 import BookDetails from './pages/BookDetails';
 
+export const API_DOMAIN = 'http://192.168.0.38:3000';
+
 export default function App() {
 
   const Stack = createStackNavigator();
