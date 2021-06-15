@@ -18,7 +18,7 @@ Construir uma aplicação fullstack capaz de exibir uma lista de livros cadastra
 - API: https://fullstack-challenge.juliano988.repl.co/
 - APK Download: https://github.com/juliano988/fullstack-challenge/raw/master/apk/BookApp.apk
 
-![APK Download](assets\app_qr_code.PNG)
+![APK Download](https://github.com/juliano988/fullstack-challenge/blob/master/assets/app_qr_code.PNG?raw=true)
 
 ## Utilização Local
 
