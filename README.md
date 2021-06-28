@@ -27,6 +27,7 @@ Construir uma aplicação fullstack capaz de exibir uma lista de livros cadastra
 2. Executar o seguinte comando via terminal na raiz do diretório do projeto:
 
 ```node
+yarn
 node server
 ```
 
